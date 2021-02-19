@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree</title>
+    
+</head>
+<body>
+    <canvas>
+         
+    </canvas>
+    <script>
+        const canvas = document.querySelector('canvas');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const context = canvas.getContext('2d');
+
+        function drawTree(startX, startY, length, angle, branchWidth, color) {
+            context.beginPath();
+            context.save();
+            context.strokeStyle = color;
+            context.lineWidth = branchWidth;
+            context.translate(startX, startY);
+            context.rotate(angle * Math.PI/180);
+            context.moveTo(0,0);
+            context.lineTo(0, -length);
+            context.stroke();
+
+            if (length < 10) {
+                context.restore();
+                return;
+            }
+            
+            drawTree( 0, -length, length * 0.75, angle + 10, branchWidth);
+            drawTree( 0, -length, length * 0.75, angle - 10, branchWidth);
+           
+            context.restore();
+        }
+        drawTree(canvas.width/2, canvas.height - 50, 150, 0, 1, 'red')
+    </script>
+</body>
+</html>
